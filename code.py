@@ -1,13 +1,26 @@
 import PySimpleGUI as sg
 from pathlib import Path
 
+sentences = [
+    'Poems',['Life me, me','Roses are violet sometimes','Lungs full of cigarette smoke'],
+    'Quotes',['Set yourself free','Keep going','Chose to shine','No pain No gain']
+]
+sentences_events = sentences[1] + sentences[3]
+
+lennyfaces = [
+    'Basic',['( ͡° ͜ʖ ͡°)','( ͠° ͟ʖ ͡°)','( ͡ʘ ͜ʖ ͡ʘ)','( ͡° ʖ̯ ͡°)'],
+    'Fight',['(ง ͠° ͟ل͜ ͡°)ง','(╯ ͠° ͟ʖ ͡°)','( ͡° ͜ʖ ͡°)╭∩╮','ᕦ( ͡° ͜ʖ ͡°)ᕤ'],
+    'Weird',['ಠ_ಠ','(✿❦ ͜ʖ ❦)']
+]
+lenny_events = lennyfaces[1] + lennyfaces[3] + lennyfaces[5]
+
 menu_layout = [
     ['File',['Open','Save','---','Exit']],
-    ['Tools',['Word Count']],
-    ['Add']
-]
+    ['Tools',['Word Count','Big Letters','Small Letters']],
+    ['Add',sentences],
+    ['( ͡° ͜ʖ ͡°)',lennyfaces]]
 
-sg.theme('GrayGrayGray')
+sg.theme('Dark')
 layout = [
     [sg.Menu(menu_layout)],
     [sg.Text('Untilted', key = '-DOCNAME-')],
@@ -34,11 +47,25 @@ while True:
         file.write_text(values['-TEXTBOX-'])
         window['-DOCNAME-'].update(file_path.split('/')[-1])
 
+    if event == "Exit":
+        window.close()
+
     if event == 'Word Count':
         full_text = values['-TEXTBOX-']
         clean_text = full_text.replace('\n',' ').split(' ')
         word_count = len(clean_text)
         char_count = len(''.join(clean_text))
         sg.popup(f'words: {word_count}\ncharacters: {char_count}')
+
+    if event == 'Big Letters':
+        pass
+    
+    if event == 'Small Letters':
+        pass
+
+    if event in lenny_events or sentences_events:
+        current_text = values['-TEXTBOX-']
+        new_text = current_text + event
+        window['-TEXTBOX-'].update(new_text)
 
 window.close()
