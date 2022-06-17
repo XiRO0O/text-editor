@@ -16,7 +16,7 @@ lenny_events = lennyfaces[1] + lennyfaces[3] + lennyfaces[5]
 
 menu_layout = [
     ['File',['Open','Save','---','Exit']],
-    ['Tools',['Word Count','Big Letters','Small Letters']],
+    ['Tools',['Word Count','Big Letters','Small Letters','Change Letters']],
     ['Add',sentences],
     ['( ͡° ͜ʖ ͡°)',lennyfaces]]
 
@@ -58,12 +58,47 @@ while True:
         sg.popup(f'words: {word_count}\ncharacters: {char_count}')
 
     if event == 'Big Letters':
-        pass
-    
-    if event == 'Small Letters':
-        pass
+        string = values['-TEXTBOX-']
+        newstring = ''
+        for a in string:
+            if (a.isupper()) == True:
+                newstring += (a.upper())
+            elif (a.islower()) == True: 
+                newstring += (a.upper())
+            elif (a.isspace()) == True: 
+                newstring += a
+        window['-TEXTBOX-'].update(newstring)
 
-    if event in lenny_events or sentences_events:
+    if event == 'Small Letters':
+        string = values['-TEXTBOX-']
+        newstring = ''
+        for a in string:
+            if (a.isupper()) == True:
+                newstring += (a.lower())
+            elif (a.islower()) == True: 
+                newstring += (a.lower())
+            elif (a.isspace()) == True: 
+                newstring += a
+        window['-TEXTBOX-'].update(newstring)
+
+    if event == 'Change Letters':
+        string = values['-TEXTBOX-']
+        newstring = ''
+        for a in string:
+            if (a.isupper()) == True:
+                newstring += (a.lower())
+            elif (a.islower()) == True: 
+                newstring += (a.upper())
+            elif (a.isspace()) == True: 
+                newstring += a
+        window['-TEXTBOX-'].update(newstring)
+    
+    if event in sentences_events:
+        current_text = values['-TEXTBOX-']
+        new_text = current_text + event
+        window['-TEXTBOX-'].update(new_text)
+
+    if event in lenny_events:
         current_text = values['-TEXTBOX-']
         new_text = current_text + event
         window['-TEXTBOX-'].update(new_text)
